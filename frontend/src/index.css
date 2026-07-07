@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-secondary text-body font-sans;
+  }
+  h1, h2, h3, h4 {
+    @apply font-bold text-primary;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-white rounded-lg shadow-sm border border-gray-100 p-6 transition-all duration-200 hover:shadow-md;
+  }
+  .btn-primary {
+    @apply bg-primary text-white px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors flex items-center justify-center gap-2;
+  }
+  .btn-outline {
+    @apply border border-primary text-primary px-4 py-2 rounded-md hover:bg-primary hover:text-white transition-all duration-200 flex items-center justify-center gap-2;
+  }
+  .badge {
+    @apply px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider;
+  }
+  .badge-low { @apply bg-risk-low text-white; }
+  .badge-medium { @apply bg-risk-medium text-white; }
+  .badge-high { @apply bg-risk-high text-white; }
+  .badge-critical { @apply bg-risk-critical text-white; }
+
+  .nav-link {
+    @apply flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-all;
+  }
+  .nav-link.active {
+    @apply text-white bg-white/10 border-l-4 border-accent rounded-l-none;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-secondary;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-primary/20 rounded-full hover:bg-primary/40;
+}
