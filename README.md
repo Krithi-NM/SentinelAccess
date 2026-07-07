@@ -2,13 +2,13 @@
 
 SentinelAccess is a production-grade banking security dashboard designed to detect privileged access misuse and insider threats. It monitors access logs, establishes behavioral baselines using Machine Learning, and flags anomalies with plain-English explanations.
 
-## 🚀 Tech Stack
+##  Tech Stack
 - **Backend**: Python 3.10+, FastAPI
 - **ML**: scikit-learn (IsolationForest), pandas, NumPy
 - **Database**: SQLite (file-based)
 - **Frontend**: React (Vite), Tailwind CSS, Recharts, Lucide-react
 
-## 🛠️ Setup & Installation
+## Setup & Installation
 
 ### 1. Backend Setup
 ```bash
@@ -25,10 +25,10 @@ npm install
 npm run dev     # Starts the dashboard on http://localhost:5173 (or next available port)
 ```
 
-## 🔒 Quantum-Safe Audit Log
+##  Quantum-Safe Audit Log
 Every access event is hashed using SHA-3-256 for tamper-evidence, ensuring that audit trails remain immutable and verifiable against future quantum computing threats.
 
-## 🤖 Behavior Analysis
+## Behavior Analysis
 The platform uses an **Isolation Forest** algorithm to detect deviations from a user's typical:
 - Access hours
 - Data export volumes
