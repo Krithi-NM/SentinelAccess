@@ -2,6 +2,9 @@
 
 SentinelAccess is a production-grade banking security dashboard designed to detect privileged access misuse and insider threats. It monitors access logs, establishes behavioral baselines using Machine Learning, and flags anomalies with plain-English explanations.
 
+Video link :
+https://drive.google.com/file/d/1O1IWcH_jrk4lThqBQZhAbnQccLM9Cu6X/view?usp=drivesdk
+
 ##  Tech Stack
 - **Backend**: Python 3.10+, FastAPI
 - **ML**: scikit-learn (IsolationForest), pandas, NumPy
