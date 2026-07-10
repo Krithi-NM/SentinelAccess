@@ -1,6 +1,54 @@
 # Python
 __pycache__/
 *.py[cod]
+*.pyo
+*.pyd
+*.pyc
+env/
+venv/
+ENV/
+venv.bak/
+/.mypy_cache/
+/.pytest_cache/
+*.sqlite3
+*.db
+
+# Node
+node_modules/
+dist/
+build/
+/.pnp/
+.pnp.js
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+
+# Vite / frontend
+/.vite/
+/.turbo/
+public/build/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# Logs
+*.log
+# Python
+__pycache__/
+*.py[cod]
 *$py.class
 *.db
 .env
