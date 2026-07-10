@@ -27,6 +27,8 @@ class EventBase(BaseModel):
     risk_tier: str
     top_reasons: List[str]
     is_acknowledged: bool
+    is_escalated: bool
+    status: str
     audit_hash: Optional[str]
 
     class Config:

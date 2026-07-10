@@ -138,6 +138,8 @@ def seed_db():
                 'access_hour', 'location', 'ip_flag', 'data_volume_mb', 'failed_attempts_before',
                 'risk_score', 'risk_tier', 'top_reasons'
             ]}
+            clean_event['is_escalated'] = False
+            clean_event['status'] = 'Pending'
             # Add audit hash
             clean_event['audit_hash'] = compute_audit_hash(clean_event)
             session.add(AccessEvent(**clean_event))

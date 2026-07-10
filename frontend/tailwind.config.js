@@ -20,6 +20,7 @@ export default {
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
+        display: ['Outfit', 'sans-serif'],
         serif: ['Georgia', 'serif'],
       },
     },

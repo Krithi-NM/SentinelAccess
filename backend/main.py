@@ -3,8 +3,9 @@ from typing import List, Optional
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session, joinedload
 from sqlalchemy import create_engine, desc, func
-import models, schemas, ml_utils
-from database import get_db, engine
+import models, schemas, ml_utils, uuid
+from database import get_db, engine, SessionLocal
+from seed import seed_db
 import pandas as pd
 from datetime import datetime, timedelta
 
@@ -19,8 +20,14 @@ app.add_middleware(
 
 @app.on_event("startup")
 def startup():
-    # Only seed if db is empty for demo speed
-    pass
+    # Ensure database tables exist and seed demo data if empty.
+    models.Base.metadata.create_all(engine)
+    db = SessionLocal()
+    try:
+        if db.query(models.AccessEvent).count() == 0:
+            seed_db()
+    finally:
+        db.close()
 
 @app.get("/api/events", response_model=List[schemas.EventWithUser])
 def get_events(
@@ -106,8 +113,101 @@ def acknowledge_event(event_id: str, db: Session = Depends(get_db)):
     if not event:
         raise HTTPException(status_code=404, detail="Event not found")
     event.is_acknowledged = True
+    event.status = "Acknowledged"
     db.commit()
     return {"status": "success"}
+
+@app.post("/api/events/{event_id}/escalate")
+def escalate_event(event_id: str, db: Session = Depends(get_db)):
+    event = db.query(models.AccessEvent).filter(models.AccessEvent.event_id == event_id).first()
+    if not event:
+        raise HTTPException(status_code=404, detail="Event not found")
+    event.is_escalated = True
+    event.status = "Escalated"
+    db.commit()
+    return {"status": "success"}
+
+@app.post("/api/simulate-attack")
+def simulate_attack(db: Session = Depends(get_db)):
+    # Create a specific sequence for "EMP-SIM-01"
+    sim_id = "EMP-SIM-01"
+    user = db.query(models.User).filter(models.User.user_id == sim_id).first()
+    if not user:
+        user = models.User(
+            user_id=sim_id,
+            name="Vikram Malhotra",
+            role="admin",
+            department="IT Operations",
+            join_date=datetime.now() - timedelta(days=500)
+        )
+        db.add(user)
+        db.commit()
+
+    now = datetime.now()
+    
+    # 1. Login
+    e1 = models.AccessEvent(
+        event_id=str(uuid.uuid4())[:8],
+        user_id=sim_id,
+        timestamp=now - timedelta(minutes=15),
+        action_type="login",
+        resource_accessed="Admin Console",
+        access_hour=9,
+        location="Mumbai",
+        ip_flag=False,
+        data_volume_mb=2.5,
+        failed_attempts_before=0,
+        risk_score=15.0,
+        risk_tier="Low",
+        top_reasons=["Standard login from known location."],
+        audit_hash="SIM_HASH_1",
+        status="Pending"
+    )
+    
+    # 2. Access Privileged Server
+    e2 = models.AccessEvent(
+        event_id=str(uuid.uuid4())[:8],
+        user_id=sim_id,
+        timestamp=now - timedelta(minutes=10),
+        action_type="file_access",
+        resource_accessed="Core Banking DB",
+        access_hour=9,
+        location="Mumbai",
+        ip_flag=False,
+        data_volume_mb=15.0,
+        failed_attempts_before=0,
+        risk_score=45.0,
+        risk_tier="Medium",
+        top_reasons=["Accessed high-value resource.", "Unusual resource for this role."],
+        audit_hash="SIM_HASH_2",
+        status="Pending"
+    )
+    
+    # 3. High Volume Download
+    e3 = models.AccessEvent(
+        event_id=str(uuid.uuid4())[:8],
+        user_id=sim_id,
+        timestamp=now - timedelta(minutes=5),
+        action_type="data_export",
+        resource_accessed="Core Banking DB",
+        access_hour=9,
+        location="Mumbai",
+        ip_flag=False,
+        data_volume_mb=4500.0,
+        failed_attempts_before=0,
+        risk_score=98.5,
+        risk_tier="Critical",
+        top_reasons=["45x normal data volume download.", "Potential data exfiltration detected.", "MFA not challenged for large export."],
+        audit_hash="SIM_HASH_3",
+        status="Pending"
+    )
+    
+    db.add(e1)
+    db.add(e2)
+    db.add(e3)
+    db.commit()
+    
+    return {"status": "attack simulated", "event_id": e3.event_id}
 
 @app.post("/api/rescore")
 def rescore_events(db: Session = Depends(get_db)):

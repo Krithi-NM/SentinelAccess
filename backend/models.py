@@ -31,6 +31,8 @@ class AccessEvent(Base):
     risk_tier = Column(String) # Low, Medium, High, Critical
     top_reasons = Column(JSON) # List of strings
     is_acknowledged = Column(Boolean, default=False)
+    is_escalated = Column(Boolean, default=False)
+    status = Column(String, default="Pending") # Pending, Acknowledged, Escalated
     audit_hash = Column(String)
     
     user = relationship("User", back_populates="events")

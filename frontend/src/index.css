@@ -1,42 +1,170 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+  :root {
+    font-size: 18px;
+  }
+
   body {
     @apply bg-secondary text-body font-sans;
+    font-size: 1.08rem;
+    line-height: 1.6;
   }
-  h1, h2, h3, h4 {
+  h1 {
     @apply font-bold text-primary;
+    font-family: 'Outfit', sans-serif;
+    font-size: 3.2rem;
+    letter-spacing: -0.02em;
   }
+  h2 {
+    @apply font-bold text-primary;
+    font-family: 'Outfit', sans-serif;
+    font-size: 2.2rem;
+    letter-spacing: -0.01em;
+  }
+  h3 {
+    @apply font-bold text-primary;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.6rem;
+  }
+
+  p, span, li, td, th, button, select, input, textarea {
+    font-size: inherit;
+  }
+
+  .text-xs { font-size: 0.85rem !important; }
+  .text-sm { font-size: 0.95rem !important; }
+  .text-base { font-size: 1.08rem !important; }
+  .text-lg { font-size: 1.2rem !important; }
+  .text-xl { font-size: 1.35rem !important; }
+  .text-2xl { font-size: 1.55rem !important; }
+  .text-3xl { font-size: 1.8rem !important; }
+  .text-4xl { font-size: 2.1rem !important; }
+  .text-5xl { font-size: 2.45rem !important; }
+  .text-6xl { font-size: 2.8rem !important; }
+  .text-7xl { font-size: 3.2rem !important; }
+  .text-8xl { font-size: 3.6rem !important; }
+  .text-9xl { font-size: 4.1rem !important; }
+
+  .text-\[9px\] { font-size: 0.8rem !important; }
+  .text-\[10px\] { font-size: 0.85rem !important; }
+  .text-\[11px\] { font-size: 0.9rem !important; }
+  .text-\[12px\] { font-size: 0.95rem !important; }
+  .text-\[13px\] { font-size: 0.98rem !important; }
+  .text-\[14px\] { font-size: 1rem !important; }
+  .text-\[15px\] { font-size: 1.02rem !important; }
+  .text-\[16px\] { font-size: 1.05rem !important; }
 }
 
 @layer components {
   .card {
-    @apply bg-white rounded-lg shadow-sm border border-gray-100 p-6 transition-all duration-200 hover:shadow-md;
+    @apply bg-white rounded-3xl shadow-[0_4px_30px_rgba(0,0,0,0.02)] border border-gray-100/80 p-7 transition-all duration-300;
+  }
+  .card-premium {
+    @apply shadow-[0_15px_50px_rgba(33,88,104,0.06)] border border-primary/10 bg-gradient-to-br from-white to-gray-50/30;
   }
   .btn-primary {
-    @apply bg-primary text-white px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors flex items-center justify-center gap-2;
+    @apply bg-primary text-white px-6 py-3 rounded-2xl font-bold transition-all duration-300 flex items-center justify-center gap-3 hover:shadow-2xl hover:shadow-primary/30 hover:-translate-y-0.5 active:translate-y-0;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
   }
   .btn-outline {
-    @apply border border-primary text-primary px-4 py-2 rounded-md hover:bg-primary hover:text-white transition-all duration-200 flex items-center justify-center gap-2;
+    @apply border-2 border-primary text-primary px-6 py-3 rounded-2xl font-bold hover:bg-primary hover:text-white transition-all duration-300 flex items-center justify-center gap-3;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .table-row {
+    @apply h-24 transition-colors cursor-pointer border-b border-gray-50/80;
+  }
+  .nav-link {
+    @apply flex items-center gap-5 px-8 py-5 text-white/40 hover:text-accent hover:bg-white/5 border-l-4 border-transparent transition-all;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .table-row:nth-child(even) {
+    @apply bg-gray-50/20;
+  }
+  .table-row:hover {
+    @apply bg-primary/[0.03];
   }
   .badge {
-    @apply px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider;
+    @apply px-5 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest border;
   }
-  .badge-low { @apply bg-risk-low text-white; }
-  .badge-medium { @apply bg-risk-medium text-white; }
-  .badge-high { @apply bg-risk-high text-white; }
-  .badge-critical { @apply bg-risk-critical text-white; }
+  .badge-low { @apply bg-risk-low/5 text-risk-low border-risk-low/20; }
+  .badge-medium { @apply bg-risk-medium/5 text-risk-medium border-risk-medium/20; }
+  .badge-high { @apply bg-risk-high/5 text-risk-high border-risk-high/20; }
+  .badge-critical { @apply bg-risk-critical/5 text-risk-critical border-risk-critical/20; }
 
   .nav-link {
-    @apply flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-all;
+    @apply flex items-center gap-5 px-8 py-5 text-white/40 hover:text-accent hover:bg-white/5 border-l-4 border-transparent transition-all;
+    font-size: 17px;
+    font-weight: 600;
   }
   .nav-link.active {
-    @apply text-white bg-white/10 border-l-4 border-accent rounded-l-none;
+    @apply text-accent bg-white/10 border-accent text-white/90;
   }
+}
+
+.max-page-width {
+  @apply max-w-[1920px] mx-auto w-[94%];
+}
+
+/* Custom Animations */
+@keyframes risk-pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.animate-risk-pulse {
+  animation: risk-pulse 2s infinite ease-in-out;
+}
+
+@keyframes shimmer {
+  0% { background-position: -468px 0; }
+  100% { background-position: 468px 0; }
+}
+
+.skeleton {
+  background: #f6f7f8;
+  background-image: linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
+  background-repeat: no-repeat;
+  background-size: 800px 104px;
+  display: inline-block;
+  position: relative;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: shimmer;
+  animation-timing-function: linear;
+}
+
+.glass-morphism {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.scrolling-text {
+  @apply whitespace-nowrap overflow-hidden;
+  animation: scroll 20s linear infinite;
+  display: inline-block;
+  will-change: transform;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+@keyframes scroll {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
 }
 
 /* Custom Scrollbar */
